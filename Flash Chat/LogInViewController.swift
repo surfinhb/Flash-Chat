@@ -6,6 +6,7 @@
 
 
 import UIKit
+import Firebase
 
 
 class LogInViewController: UIViewController {
@@ -14,7 +15,9 @@ class LogInViewController: UIViewController {
     @IBOutlet var emailTextfield: UITextField!
     @IBOutlet var passwordTextfield: UITextField!
     
+    
     override func viewDidLoad() {
+        passwordTextfield.isSecureTextEntry = true
         super.viewDidLoad()
         
     }
@@ -25,9 +28,21 @@ class LogInViewController: UIViewController {
 
    
     @IBAction func logInPressed(_ sender: AnyObject) {
-
         
+
+        print("HIIIII")
         //TODO: Log in the user
+        Auth.auth().signIn(withEmail: emailTextfield.text!, password: passwordTextfield.text!) { (user, error) in
+            
+            if error != nil {
+                print("error")
+                print(error!)
+            } else {
+                print("Log in successful!")
+                self.performSegue(withIdentifier: "goToChat", sender: self)
+            }
+            
+        }
         
         
     }
